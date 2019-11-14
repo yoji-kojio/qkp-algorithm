@@ -157,9 +157,9 @@ void maketest(int n1, int r, int pct) {
   }
 
   // print weight array
-  for(i=0; i<n; i++) {
-    printf("%d ", w[i]);
-  }
+  // for(i=0; i<n; i++) {
+  //   printf("%d ", w[i]);
+  // }
 
   // print instance matrix
   // for (row = 0; row < MSIZE; row++) {
@@ -171,12 +171,15 @@ void maketest(int n1, int r, int pct) {
   // }
 
   psum = 0; wsum = 0;
+
   for (i = 0; i < n; i++) {
     x[i] = 0; wsum += w[i];
     for (j = 0; j < n; j++) psum += p[i][j];
   }
+
   if (wsum - 50 <= 0) terminate("too small weight sum");
-  c    = randm(wsum-50) + 50;
+
+  c = randm(wsum-50) + 50;
 }
 
 /* ======================================================================
@@ -221,6 +224,7 @@ void checksolution(int c, int z) {
   int psum, wsum;
 
   psum = wsum = 0;
+
   for (i = 0; i < n; i++) {
     if (!x[i]) continue;
     wsum += w[i];
@@ -228,6 +232,7 @@ void checksolution(int c, int z) {
       if (x[j]) psum += p[i][j];
     }
   }
+
   /* printf("CHECK %d: psum %d z %d wsum %d c %d\n", n, psum,z,wsum,c); */
   if (wsum > c) terminate("excess weight");
   if (psum != z) terminate("bad solution");
@@ -259,7 +264,9 @@ int main(int argc, char *argv[]) {
 
   trace = fopen("trace.c", "a");
   fprintf(trace,"\nQUADKNAP: n: %d, r: %d, pct: %d\n", n, r, pct);
+
   if (n > MSIZE) terminate("table too small");
+
   for (v = 1; v <= TESTS; v++) {
     srand(v+n+r+pct);
     maketest(n, r, pct);
@@ -271,7 +278,9 @@ int main(int argc, char *argv[]) {
     checksolution(c, z);
     sumdata(n, r, pct, z, c, time);
   }
+
   sumdata(0, 0, 0, 0, 0, 0);
   fclose(trace);
+
   return 0;
 }

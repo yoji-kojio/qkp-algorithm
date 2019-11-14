@@ -30,7 +30,7 @@
  *   no        Size of problem, i.e. number of items.
  *   ptab      A pointer to an integer matrix of profits p[i][j].
                It is very important to declare the matrix as
-                 int ptab[MSIZE][MSIZE];
+               int ptab[MSIZE][MSIZE];
                in order to be interpreted correctly. The constant
                MSIZE is defined below.
  *   wtab      A table of weights w[i] of length at least no.
@@ -59,7 +59,7 @@
 #include <stdarg.h>
 
 /* ======================================================================
-				   macros
+      macros
    ====================================================================== */
 
 #define ABS(a)                  ((a) < 0 ? -(a) : (a))
@@ -68,7 +68,7 @@
 
 
 /* ======================================================================
-				 type declarations
+      type declarations
    ====================================================================== */
 
 typedef int     boolean;
@@ -109,7 +109,7 @@ typedef int (*funcptr) (const void *, const void *);
 
 
 /* ======================================================================
- 			    global variables
+      global variables
    ====================================================================== */
 
 static ntype n;
@@ -127,11 +127,10 @@ static long iterations;
 
 
 /* =======================================================================
-				  error
+      error
    ======================================================================= */
 
-void error(char *str)
-{
+void error(char *str) {
   printf("%s\n", str);
   printf("PROGRAM IS TERMINATED !!!\n\n");
   exit(-1);
@@ -139,7 +138,7 @@ void error(char *str)
 
 
 /* ======================================================================
-				 comparisons
+      comparisons
    ====================================================================== */
 
 int povercomp(ntype *a, ntype *b) {return DET(pover[*b],w[*b],pover[*a],w[*a]);}
@@ -151,18 +150,16 @@ int ecomp(lpitem *a, lpitem *b) {
 
 
 /* ======================================================================
-				  palloc
+      palloc
    ====================================================================== */
 
-void pfree(void *p)
-{
+void pfree(void *p) {
   if (p == NULL) error("freeing null");
   free(p);
 }
 
 
-void *palloc(long size, long no)
-{
+void *palloc(long size, long no) {
   long *p;
 
   size *= no;
@@ -178,8 +175,7 @@ void *palloc(long size, long no)
 				partsort
    ====================================================================== */
 
-void partsort(lpitem *f, lpitem *l, stype c)
-{
+void partsort(lpitem *f, lpitem *l, stype c) {
   register lpitem *i, *j, *m;
   register etype me;
   register stype ws;
@@ -213,8 +209,7 @@ void partsort(lpitem *f, lpitem *l, stype c)
                                   lpsolve
    ====================================================================== */
 
-stype lpsolve(lpitem *a, stype c, int n)
-{
+stype lpsolve(lpitem *a, stype c, int n) {
   register lpitem *k, *m;
   register stype r;
   register etype ps;
@@ -237,8 +232,7 @@ stype lpsolve(lpitem *a, stype c, int n)
 				findpover
    ====================================================================== */
 
-void findpover(void)
-{
+void findpover(void) {
   register int i, j;
   register lpitem *k;
   lpitem a[MSIZE];
@@ -260,8 +254,7 @@ void findpover(void)
                                 findorder
    ====================================================================== */
 
-void findorder(ntype *t)
-{
+void findorder(ntype *t) {
   int i;
 
   /* find upper planes */
@@ -277,8 +270,7 @@ void findorder(ntype *t)
 				  findminw
    ====================================================================== */
 
-void findminw(void)
-{
+void findminw(void) {
   int i;
   itype mw;
 
@@ -294,8 +286,7 @@ void findminw(void)
                                   improve
    ====================================================================== */
 
-void improve(int *xprime)
-{
+void improve(int *xprime) {
   register int i, j, gaini, gainj;
   register stype tot, gain, bgain, res;
   itype q[MSIZE];
@@ -353,11 +344,10 @@ void improve(int *xprime)
 
 
 /* ======================================================================
- 			  	greedy
+      greedy
    ====================================================================== */
 
-void greedy(void)
-{
+void greedy(void) {
   int i, j, mini;
   stype psum, wsum, pi, minp;
   double eff, mineff;
@@ -397,11 +387,10 @@ void greedy(void)
 
 
 /* ======================================================================
-                                  reorder
+      reorder
    ====================================================================== */
 
-void reorder(ntype *new, ntype *old)
-{
+void reorder(ntype *new, ntype *old) {
   /* makes an ordering according to indices in new, returns a table */
   /* old, which when applied to reorder, brings back the table to origin */
   int i, j, i1, j1;
@@ -438,11 +427,10 @@ void reorder(ntype *new, ntype *old)
 
 
 /* ======================================================================
-                                invertorder
+      invertorder
    ====================================================================== */
 
-static void invertorder(int *rev, int *org)
-{
+static void invertorder(int *rev, int *org) {
   int i;
 
   for (i = 0; i < n; i++) {
@@ -452,11 +440,10 @@ static void invertorder(int *rev, int *org)
 
 
 /* ======================================================================
-                                  iterate
+      iterate
    ====================================================================== */
 
-void iterate(int loopno)
-{
+void iterate(int loopno) {
   register int i, j, pij;
   register lpitem *k;
   register etype d, da, stp, dp, sumd, mu, *pi, *xi;
@@ -556,8 +543,7 @@ void iterate(int loopno)
                                   findbound
    ====================================================================== */
 
-stype findbound(int f, int c, int h, int val)
-{
+stype findbound(int f, int c, int h, int val) {
   /* find continuous bound for items i >= t,   */
   /* capacity c, and item h fixed at value val */
 
@@ -601,8 +587,7 @@ stype findbound(int f, int c, int h, int val)
                                    reduce
    ====================================================================== */
 
-ntype reduce(ntype *ord)
-{
+ntype reduce(ntype *ord) {
   register int i, j;
   stype u, r1, r0;
 
@@ -634,8 +619,7 @@ ntype reduce(ntype *ord)
                                    decrease
    ====================================================================== */
 
-void decrease(ntype nf, stype *ps, stype *ws)
-{
+void decrease(ntype nf, stype *ps, stype *ws) {
   register int i, j;
   stype psum, wsum;
 
@@ -654,8 +638,7 @@ void decrease(ntype nf, stype *ps, stype *ws)
                                    increase
    ====================================================================== */
 
-void increase(int nf)
-{
+void increase(int nf) {
   register int i, j;
 
   for (i = n; i < n+nf; i++) {
@@ -670,8 +653,7 @@ void increase(int nf)
 				  initsets
    ====================================================================== */
 
-void initsets(void)
-{
+void initsets(void) {
   register int i, j, l;
   register lpitem *k;
   register itemlist *u, *h, *g;
@@ -723,8 +705,7 @@ void initsets(void)
 				 removeitem
    ====================================================================== */
 
-void removeitem(int t)
-{
+void removeitem(int t) {
   register itemlist *h;
   register rowknap *row;
   register int i;
@@ -751,8 +732,7 @@ void removeitem(int t)
 				 insertitem
    ====================================================================== */
 
-void insertitem(int t)
-{
+void insertitem(int t) {
   register itemlist *h;
   register rowknap *row;
   register int i;
@@ -773,8 +753,7 @@ void insertitem(int t)
                                  breakbound
    ====================================================================== */
 
-stype breakbound(stype ps, stype ws, int t)
-{
+stype breakbound(stype ps, stype ws, int t) {
   register itemlist *h;
   register stype psumb, wsumb, c1;
   register rowknap *row;
@@ -814,8 +793,7 @@ stype breakbound(stype ps, stype ws, int t)
                                 quadbranch
    ====================================================================== */
 
-void quadbranch(stype ps, stype ws, int t)
-{
+void quadbranch(stype ps, stype ws, int t) {
   register int j;
   stype u;
 
@@ -850,8 +828,7 @@ void quadbranch(stype ps, stype ws, int t)
 				quadknap
    ====================================================================== */
 
-int quadknap(int no, int cap, int *ptab, int *wtab, int *xtab)
-{
+int quadknap(int no, int cap, int *ptab, int *wtab, int *xtab) {
   int i, j;
   long time, ltime;
   stype ps, ws;
